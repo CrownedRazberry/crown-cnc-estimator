@@ -12,7 +12,10 @@ def parse_step(file_path: Path | str) -> int:
     """Return the number of data entries in the given STEP file."""
     path = Path(file_path)
     count = 0
-    with path.open("r", encoding="utf-8") as f:
+    # STEP files are typically plain text, but some models may include
+    # non-UTF-8 characters. Ignore decode errors so such files can still be
+    # processed without raising ``UnicodeDecodeError``.
+    with path.open("r", encoding="utf-8", errors="ignore") as f:
         for line in f:
             if line.strip().startswith("#"):
                 count += 1
@@ -25,7 +28,9 @@ def bounding_box(file_path: Path | str) -> tuple[float, float, float, float, flo
     xs: list[float] = []
     ys: list[float] = []
     zs: list[float] = []
-    with path.open("r", encoding="utf-8") as f:
+    # Use ``errors='ignore'`` so files with a different encoding don't cause
+    # a failure when reading.
+    with path.open("r", encoding="utf-8", errors="ignore") as f:
         for line in f:
             match = _COORD_PATTERN.search(line)
             if match:
