@@ -34,11 +34,32 @@ count = parse_step(Path("example.step"))
 print(count)
 ```
 
-The CLI can compute a bounding box for a STEP file and round dimensions up to
-the nearest 0.125&nbsp;inch (3.175&nbsp;mm). Units and material can be selected:
+The CLI now organizes features into subcommands.
+Compute a bounding box with rounding to the nearest 0.125&nbsp;inch
+(3.175&nbsp;mm):
 
 ```bash
-crown-cnc-estimator tests/sample.step --units inch --material 1018
+crown-cnc-estimator bounding-box tests/sample.step --units inch --material 1018
+```
+
+Other available subcommands are:
+
+```bash
+crown-cnc-estimator parse-step tests/sample.step
+crown-cnc-estimator runtime 100 200
+```
+
+Run interactively to be prompted for arguments, or launch a small GUI:
+
+```bash
+crown-cnc-estimator interactive
+crown-cnc-estimator gui
+```
+
+For a web-based interface, install `streamlit` and run the provided app:
+
+```bash
+streamlit run streamlit_app.py
 ```
 
 ## Running Tests
