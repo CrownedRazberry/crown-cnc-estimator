@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "crown-cnc-estimator"
+version = "0.1.0"
+authors = [
+    {name = "Crown CNC"}
+]
+description = "Utilities for estimating CNC runtime and parsing STEP models"
+readme = "README.md"
+requires-python = ">=3.8"
+
+[project.scripts]
+crown-cnc-estimator = "crown_cnc_estimator.cli:main"
+
+[project.urls]
+Homepage = "https://example.com"
+
+[tool.setuptools]
+packages = ["crown_cnc_estimator"]
