@@ -11,10 +11,12 @@ authors = [
 description = "Utilities for estimating CNC runtime and parsing STEP models"
 readme = "README.md"
 requires-python = ">=3.8"
-packages = ["crown_cnc_estimator"]
 
 [project.scripts]
 crown-cnc-estimator = "crown_cnc_estimator.cli:main"
 
 [project.urls]
 Homepage = "https://example.com"
+
+[tool.setuptools]
+packages = ["crown_cnc_estimator"]
