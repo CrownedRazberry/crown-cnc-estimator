@@ -5,7 +5,10 @@ from __future__ import annotations
 from pathlib import Path
 import re
 
-_COORD_PATTERN = re.compile(r"\((-?\d*\.?\d+),\s*(-?\d*\.?\d+),\s*(-?\d*\.?\d+)")
+# Floating point numbers in STEP files may include scientific notation or omit
+# a leading zero. Allow formats like ``1.``, ``.5`` and ``1.0E-3``.
+_FLOAT_RE = r"[-+]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?"
+_COORD_PATTERN = re.compile(rf"\(({_FLOAT_RE}),\s*({_FLOAT_RE}),\s*({_FLOAT_RE})\)")
 
 
 def parse_step(file_path: Path | str) -> int:
