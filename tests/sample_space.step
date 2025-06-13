@@ -1,0 +1,10 @@
+ISO-10303-21;
+HEADER;
+FILE_DESCRIPTION(('Space exp STEP file'),'1');
+FILE_NAME('sample_space.step','2023-01-01T00:00:00',(''),(''),'','','');
+FILE_SCHEMA(('AUTOMOTIVE_DESIGN CC2'));
+ENDSEC;
+DATA;
+#1= CARTESIAN_POINT('',(1.0E +01, 2.0E -01, -3.0D +0));
+ENDSEC;
+END-ISO-10303-21;

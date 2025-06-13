@@ -24,6 +24,15 @@ runtime = calculate_runtime(feed_rate=100, path_length=200)
 print(runtime)  # 2.0 minutes
 ```
 
+Calculate material removal rate:
+
+```python
+from crown_cnc_estimator import calculate_material_removal_rate
+
+mrr = calculate_material_removal_rate(feed_rate=100, width_of_cut=2.0, depth_of_cut=0.5)
+print(mrr)  # 100.0 cubic units per minute
+```
+
 Parse a STEP file:
 
 ```python
@@ -33,6 +42,12 @@ from crown_cnc_estimator import parse_step
 count = parse_step(Path("example.step"))
 print(count)
 ```
+
+The STEP parser tolerates whitespace almost anywhere within a number. It
+supports spaces or newlines around exponent markers and even inside the
+mantissa, and accepts both `E` and `D` notation when reading coordinate
+values. The underlying regular expression is flexible enough to handle
+numbers split across multiple lines.
 
 The CLI now organizes features into subcommands.
 Compute a bounding box with rounding to the nearest 0.125&nbsp;inch
