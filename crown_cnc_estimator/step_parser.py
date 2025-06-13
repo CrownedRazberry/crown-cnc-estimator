@@ -19,9 +19,9 @@ _FLOAT_RE = r"""
     (?:
         \d+(?:\s*\.\s*\d*)?       # digits with optional decimal part
         |                             # or
-        \.?\s*\d+                    # leading decimal point
+        \.\s*\d+                     # leading decimal point
     )
-    (?:\s*[eEdD]\s*[+-]?\s*\d+)?    # optional exponent, spaces allowed before
+    (?:\s*[eEdD]\s*[+-]?\s*\d+)?    # optional exponent with whitespace around marker
 """
 
 # Match ``(x, y, z)`` allowing spaces or newlines almost anywhere within the
