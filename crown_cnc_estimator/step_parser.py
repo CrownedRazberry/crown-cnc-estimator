@@ -28,18 +28,13 @@ def parse_step(file_path: Path | str) -> int:
 def bounding_box(file_path: Path | str) -> tuple[float, float, float, float, float, float]:
     """Return (min_x, min_y, min_z, max_x, max_y, max_z) of coordinates found."""
     path = Path(file_path)
-    xs: list[float] = []
-    ys: list[float] = []
-    zs: list[float] = []
     # Use ``errors='ignore'`` so files with a different encoding don't cause
     # a failure when reading.
-    with path.open("r", encoding="utf-8", errors="ignore") as f:
-        for line in f:
-            match = _COORD_PATTERN.search(line)
-            if match:
-                xs.append(float(match.group(1)))
-                ys.append(float(match.group(2)))
-                zs.append(float(match.group(3)))
-    if not xs:
+    content = path.read_text(encoding="utf-8", errors="ignore")
+
+    coords = _COORD_PATTERN.findall(content)
+    if not coords:
         raise ValueError("No coordinate triples found in STEP file")
+
+    xs, ys, zs = zip(*((float(x), float(y), float(z)) for x, y, z in coords))
     return min(xs), min(ys), min(zs), max(xs), max(ys), max(zs)
