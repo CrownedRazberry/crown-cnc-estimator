@@ -9,12 +9,29 @@ import re
 # a leading zero. Some exporters also insert whitespace inside numbers or use
 # ``D``/``d`` as the exponent marker. The regex therefore captures a broad set of
 # numeric strings and any embedded whitespace is stripped before conversion.
-_FLOAT_RE = r"[-+0-9.\sEeDd]+?"
+# ``_FLOAT_RE`` matches floating point values possibly split across several
+# lines or containing internal whitespace. It accepts an optional sign,
+# a mantissa with or without a leading digit and a scientific exponent using
+# either ``E`` or ``D`` notation. Any whitespace is stripped prior to
+# conversion to ``float``.
+_FLOAT_RE = r"""
+    [+-]?                             # optional sign
+    (?:
+        \d+(?:\s*\.\s*\d*)?       # digits with optional decimal part
+        |                             # or
+        \.?\s*\d+                    # leading decimal point
+    )
+    (?:\s*[eEdD]\s*[+-]?\s*\d+)?    # optional exponent, spaces allowed before
+"""
 
 # Match ``(x, y, z)`` allowing spaces or newlines almost anywhere within the
 # numbers.
+# ``_COORD_PATTERN`` captures ``(x, y, z)`` tuples where each value matches
+# ``_FLOAT_RE``. Whitespace and line breaks are permitted almost anywhere inside
+# the tuple.
 _COORD_PATTERN = re.compile(
-    rf"\(\s*({_FLOAT_RE})\s*,\s*({_FLOAT_RE})\s*,\s*({_FLOAT_RE})\s*\)"
+    rf"\(\s*({_FLOAT_RE})\s*,\s*({_FLOAT_RE})\s*,\s*({_FLOAT_RE})\s*\)",
+    re.VERBOSE | re.IGNORECASE | re.MULTILINE,
 )
 
 

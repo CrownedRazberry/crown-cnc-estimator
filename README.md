@@ -35,8 +35,10 @@ print(count)
 ```
 
 The STEP parser tolerates whitespace almost anywhere within a number. It
-supports spaces or newlines around exponent markers, within the mantissa, and
-accepts both `E` and `D` notation when reading coordinate values.
+supports spaces or newlines around exponent markers and even inside the
+mantissa, and accepts both `E` and `D` notation when reading coordinate
+values. The underlying regular expression is flexible enough to handle
+numbers split across multiple lines.
 
 The CLI now organizes features into subcommands.
 Compute a bounding box with rounding to the nearest 0.125&nbsp;inch
