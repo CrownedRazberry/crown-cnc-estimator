@@ -34,7 +34,8 @@ count = parse_step(Path("example.step"))
 print(count)
 ```
 
-The STEP parser tolerates spaces and newlines around exponent markers and
+The STEP parser tolerates whitespace almost anywhere within a number. It
+supports spaces or newlines around exponent markers, within the mantissa, and
 accepts both `E` and `D` notation when reading coordinate values.
 
 The CLI now organizes features into subcommands.

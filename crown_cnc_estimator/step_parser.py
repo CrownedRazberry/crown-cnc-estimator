@@ -6,15 +6,13 @@ from pathlib import Path
 import re
 
 # Floating point numbers in STEP files may include scientific notation or omit
-# a leading zero. Allow formats like ``1.``, ``.5`` and ``1.0E-3``.
-# Include ``D`` or ``d`` as an exponent marker since some STEP files use that
-# instead of ``E``. Allow formats like ``1.0D+3`` in addition to ``1.0E+3``.
-_FLOAT_RE = (
-    r"[-+]?(?:\d+(?:\.\d*)?|\.\d+)"
-    r"(?:\s*[eEdD]\s*[+-]?\s*\d+)?"
-)
-# Allow optional whitespace before and after each comma and before the closing
-# parenthesis so coordinates split across lines or with spaces still match.
+# a leading zero. Some exporters also insert whitespace inside numbers or use
+# ``D``/``d`` as the exponent marker. The regex therefore captures a broad set of
+# numeric strings and any embedded whitespace is stripped before conversion.
+_FLOAT_RE = r"[-+0-9.\sEeDd]+?"
+
+# Match ``(x, y, z)`` allowing spaces or newlines almost anywhere within the
+# numbers.
 _COORD_PATTERN = re.compile(
     rf"\(\s*({_FLOAT_RE})\s*,\s*({_FLOAT_RE})\s*,\s*({_FLOAT_RE})\s*\)"
 )
