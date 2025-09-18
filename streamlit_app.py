@@ -2,14 +2,14 @@ import streamlit as st
 from pathlib import Path
 
 from crown_cnc_estimator.runtime import calculate_runtime
-from crown_cnc_estimator.step_parser import bounding_box, parse_step
+from crown_cnc_estimator.step_parser import bounding_box
 from crown_cnc_estimator.cli import MATERIALS, INCH_INC, MM_INC, round_up
 
 st.title("Crown CNC Estimator")
 
 mode = st.sidebar.selectbox(
     "Select mode",
-    ("Bounding Box", "Parse STEP", "Runtime"),
+    ("Bounding Box", "Runtime"),
 )
 
 if mode == "Bounding Box":
@@ -33,22 +33,6 @@ if mode == "Bounding Box":
             st.text(f"Material: {MATERIALS[material]}")
             st.text(f"Units: {units}")
             st.text(f"Bounding box:\n  X: {rounded[0]}\n  Y: {rounded[1]}\n  Z: {rounded[2]}")
-        finally:
-            path.unlink(missing_ok=True)
-
-elif mode == "Parse STEP":
-    st.header("Parse STEP")
-    file = st.file_uploader("STEP file")
-    if file and st.button("Parse"):
-        path = Path("uploaded.step")
-        with path.open("wb") as f:
-            f.write(file.getvalue())
-        try:
-            count = parse_step(path)
-        except Exception as exc:
-            st.error(str(exc))
-        else:
-            st.text(f"Entities: {count}")
         finally:
             path.unlink(missing_ok=True)
 

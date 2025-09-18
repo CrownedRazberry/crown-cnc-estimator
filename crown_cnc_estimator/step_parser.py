@@ -1,4 +1,4 @@
-"""STEP file parsing utilities."""
+"""STEP file geometry utilities."""
 
 from __future__ import annotations
 
@@ -9,20 +9,6 @@ import re
 # a leading zero. Allow formats like ``1.``, ``.5`` and ``1.0E-3``.
 _FLOAT_RE = r"[-+]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?"
 _COORD_PATTERN = re.compile(rf"\(({_FLOAT_RE}),\s*({_FLOAT_RE}),\s*({_FLOAT_RE})\)")
-
-
-def parse_step(file_path: Path | str) -> int:
-    """Return the number of data entries in the given STEP file."""
-    path = Path(file_path)
-    count = 0
-    # STEP files are typically plain text, but some models may include
-    # non-UTF-8 characters. Ignore decode errors so such files can still be
-    # processed without raising ``UnicodeDecodeError``.
-    with path.open("r", encoding="utf-8", errors="ignore") as f:
-        for line in f:
-            if line.strip().startswith("#"):
-                count += 1
-    return count
 
 
 def bounding_box(file_path: Path | str) -> tuple[float, float, float, float, float, float]:
