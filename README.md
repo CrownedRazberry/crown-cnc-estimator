@@ -29,7 +29,7 @@ Calculate material removal rate:
 ```python
 from crown_cnc_estimator import calculate_material_removal_rate
 
-mrr = calculate_material_removal_rate(feed_rate=100, width_of_cut=2.0, depth_of_cut=0.5)
+mrr = calculate_material_removal_rate(feed_rate=100, width_of_cut=0.06, depth_of_cut=1.5)
 print(mrr)  # 100.0 cubic units per minute
 ```
 
