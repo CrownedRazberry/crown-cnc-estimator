@@ -18,10 +18,23 @@ in `tests/`.
 Calculate runtime:
 
 ```python
-from crown_cnc_estimator import calculate_runtime
+from crown_cnc_estimator import calculate_runtime, estimate_milling_runtime
 
 runtime = calculate_runtime(feed_rate=100, path_length=200)
 print(runtime)  # 2.0 minutes
+
+estimate = estimate_milling_runtime(
+    stock_volume=1_000,
+    part_volume=400,
+    roughing_mrr=10,
+    finishing_volume=60,
+    finishing_mrr=2,
+    drilling_time=5,
+    finishing_adder=1,
+    overhead_time=4,
+)
+print(estimate.minutes_per_part)  # 94.0 minutes
+print(estimate.rough_minutes, estimate.finish_minutes)
 ```
 
 The CLI now organizes features into subcommands.
