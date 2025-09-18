@@ -1,6 +1,6 @@
 # Crown CNC Estimator
 
-Utilities for estimating CNC runtime and parsing STEP models.
+Utilities for estimating CNC runtime and analyzing STEP models.
 The package can be installed in editable mode for development or as a
 standard dependency.
 
@@ -24,16 +24,6 @@ runtime = calculate_runtime(feed_rate=100, path_length=200)
 print(runtime)  # 2.0 minutes
 ```
 
-Parse a STEP file:
-
-```python
-from pathlib import Path
-from crown_cnc_estimator import parse_step
-
-count = parse_step(Path("example.step"))
-print(count)
-```
-
 The CLI now organizes features into subcommands.
 Compute a bounding box with rounding to the nearest 0.125&nbsp;inch
 (3.175&nbsp;mm):
@@ -42,10 +32,9 @@ Compute a bounding box with rounding to the nearest 0.125&nbsp;inch
 crown-cnc-estimator bounding-box tests/sample.step --units inch --material 1018
 ```
 
-Other available subcommands are:
+Another available subcommand calculates runtime from a feed rate and path length:
 
 ```bash
-crown-cnc-estimator parse-step tests/sample.step
 crown-cnc-estimator runtime 100 200
 ```
 

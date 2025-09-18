@@ -4,7 +4,7 @@ import argparse
 from pathlib import Path
 import sys
 
-from .step_parser import bounding_box, parse_step
+from .step_parser import bounding_box
 from .runtime import calculate_runtime
 from . import APP_NAME
 
@@ -38,13 +38,6 @@ def _bounding_box_cmd(args: argparse.Namespace) -> None:
     print(f"  X: {rounded[0]}")
     print(f"  Y: {rounded[1]}")
     print(f"  Z: {rounded[2]}")
-
-
-def _parse_cmd(args: argparse.Namespace) -> None:
-    if not args.file.exists():
-        sys.exit(f"File not found: {args.file}")
-    count = parse_step(args.file)
-    print(f"Entities: {count}")
 
 
 def _runtime_cmd(args: argparse.Namespace) -> None:
@@ -138,10 +131,6 @@ def main(argv: list[str] | None = None) -> None:
     bb_parser.add_argument("--units", choices=["metric", "inch"], default="metric", help="Units used in the STEP file")
     bb_parser.add_argument("--material", choices=list(MATERIALS), default="6061", help="Material type")
     bb_parser.set_defaults(func=_bounding_box_cmd)
-
-    parse_parser = subparsers.add_parser("parse-step", help="Count entries in a STEP file")
-    parse_parser.add_argument("file", type=Path, help="STEP file to parse")
-    parse_parser.set_defaults(func=_parse_cmd)
 
     runtime_parser = subparsers.add_parser("runtime", help="Calculate runtime from feed rate and path length")
     runtime_parser.add_argument("feed_rate", type=float, help="Feed rate (units/min)")

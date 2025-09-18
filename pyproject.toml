@@ -8,7 +8,7 @@ version = "0.1.0"
 authors = [
     {name = "Crown CNC"}
 ]
-description = "Utilities for estimating CNC runtime and parsing STEP models"
+description = "Utilities for estimating CNC runtime and analyzing STEP models"
 readme = "README.md"
 requires-python = ">=3.8"
 
@@ -20,3 +20,6 @@ Homepage = "https://example.com"
 
 [tool.setuptools]
 packages = ["crown_cnc_estimator"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
